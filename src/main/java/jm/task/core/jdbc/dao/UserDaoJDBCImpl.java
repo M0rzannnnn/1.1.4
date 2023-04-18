@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     public void createUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
         try (Statement statement = connection.createStatement()) {
-            String mysql = "CREATE table if not exists Users (id bigint primary key auto_increment, " +
+            String mysql = "CREATE table if not exists User (id bigint primary key auto_increment, " +
                     "name varchar(255), " +
                     "lastName varchar(255), " +
                     "age tinyint)";
@@ -29,7 +29,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     }
     public void dropUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
-        String mysql = "DROP TABLE USERS";
+        String mysql = "DROP TABLE USER";
         try (Statement statement = connection.createStatement()) {
             statement.execute(mysql);
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     }
     public void saveUser(String name, String lastName, byte age) throws SQLException {
         Connection connection = Util.getConnection();
-        String mysql = "INSERT INTO USERS (NAME, LASTNAME, AGE) VALUES (?, ?, ?)";
+        String mysql = "INSERT INTO USER (NAME, LASTNAME, AGE) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(mysql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -59,7 +59,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     public void removeUserById(long id) throws SQLException {
         Connection connection = Util.getConnection();
-        String mysql = "DELETE FROM USERS WHERE ID = ?";
+        String mysql = "DELETE FROM USER WHERE ID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(mysql)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -74,7 +74,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     public List<User> getAllUsers() throws SQLException {
         Connection connection = Util.getConnection();
         List<User> userList = new ArrayList<>();
-        String mysql = "SELECT * FROM USERS";
+        String mysql = "SELECT * FROM USER";
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(mysql);
             while (resultSet.next()) {
@@ -96,7 +96,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     }
     public void cleanUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
-        String mysql = "TRUNCATE TABLE USERS";
+        String mysql = "TRUNCATE TABLE USER";
         try (Statement statement = connection.createStatement()) {
             statement.execute(mysql);
         } catch (SQLException e) {
